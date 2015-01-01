@@ -34,10 +34,7 @@ ensureKind o k = do
   guard $ kind == k
 
 googl :: Builder
-googl = Builder "Goo.gl Link Shortener"
-                "https://www.googleapis.com/urlshortener"
-                id
-                id
+googl = basic "Goo.gl Link Shortener" "https://www.googleapis.com/urlshortener"
 
 shortenURL :: Text -> IO (Either (APIError ()) ShortURL)
 shortenURL t = execAPI googl () $
