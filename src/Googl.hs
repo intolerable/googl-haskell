@@ -1,6 +1,7 @@
 module Googl
   ( ShortURL(..)
-  , shortenURL ) where
+  , shortenURL
+  , shorten ) where
 
 import Control.Applicative
 import Control.Monad
