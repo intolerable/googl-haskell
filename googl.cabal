@@ -21,4 +21,4 @@ library
   default-extensions:
     GeneralizedNewtypeDeriving
     OverloadedStrings
-  ghc-options: -Wall -Werror
+  ghc-options: -Wall
