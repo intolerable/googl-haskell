@@ -10,6 +10,7 @@ import Data.Aeson.Types
 import Data.Monoid
 import Data.Text (Text)
 import Network.API.Builder
+import Prelude
 
 newtype APIKey = APIKey Text
   deriving (Show, Read, Eq)
