@@ -43,3 +43,10 @@ shortenURL t = execAPI googl () $
     route = Route ["v1", "url"]
                   [ ]
                   "POST"
+
+shorten :: Text -> IO (Maybe ShortURL)
+shorten t = do
+  res <- shortenURL t
+  case res of
+    Left _ -> return Nothing
+    Right x -> return (Just x)
