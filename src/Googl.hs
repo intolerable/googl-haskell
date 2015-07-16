@@ -1,5 +1,6 @@
 module Googl
   ( ShortURL(..)
+  , APIKey(..)
   , shortenURL
   , shorten ) where
 
@@ -15,8 +16,11 @@ import Prelude
 newtype APIKey = APIKey Text
   deriving (Show, Read, Eq)
 
+instance ToQuery APIKey where
+  toQuery k (APIKey v) = toQuery k v
+
 data ShortURL =
-  ShortURL { urlID :: Text
+  ShortURL { shortURL :: Text
            , longURL :: Text}
   deriving (Show, Read, Eq)
 
@@ -38,17 +42,17 @@ ensureKind o k = do
 googl :: Builder
 googl = basicBuilder "Goo.gl Link Shortener" "https://www.googleapis.com/urlshortener"
 
-shortenURL :: Text -> IO (Either (APIError ()) ShortURL)
-shortenURL t = execAPI googl () $
+shortenURL :: Maybe APIKey -> Text -> IO (Either (APIError ()) ShortURL)
+shortenURL k t = execAPI googl () $
   sendRoute (object ["longUrl" .= t]) route
   where
     route = Route ["v1", "url"]
-                  [ ]
+                  [ "key" =. k ]
                   "POST"
 
 shorten :: Text -> IO (Maybe ShortURL)
 shorten t = do
-  res <- shortenURL t
+  res <- shortenURL Nothing t
   case res of
     Left _ -> return Nothing
     Right x -> return (Just x)
